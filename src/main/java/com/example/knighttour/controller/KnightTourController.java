@@ -2,8 +2,11 @@ package com.example.knighttour.controller;
 
 import com.example.knighttour.model.KnightTour;
 import com.example.knighttour.util.SoundPlayer;
+import com.example.knighttour.view.InitialPositionDialog;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
+import javafx.util.Pair;
+import java.util.Optional;
 
 /**
  * Controller class for the Knight's Tour application.
@@ -33,6 +36,13 @@ public class KnightTourController {
         this.statusLabel = statusLabel;
         this.moveHistoryArea = moveHistoryArea;
         this.boardUpdateCallback = boardUpdateCallback;
+
+        // Get initial position from user
+        Optional<Pair<Integer, Integer>> initialPosition = InitialPositionDialog.showDialog(boardSize);
+        if (initialPosition.isPresent()) {
+            Pair<Integer, Integer> position = initialPosition.get();
+            knightTour.setInitialPosition(position.getKey(), position.getValue());
+        }
 
         // Set initial status
         updateStatus();

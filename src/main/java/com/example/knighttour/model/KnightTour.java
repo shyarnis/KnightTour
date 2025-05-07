@@ -133,6 +133,32 @@ public class KnightTour {
         moveHistory.add(new int[]{currentX, currentY});
     }
 
+    /**
+     * Sets the initial position of the knight and resets the tour.
+     *
+     * @param x The x-coordinate (column) of the initial position
+     * @param y The y-coordinate (row) of the initial position
+     * @throws IllegalArgumentException if the position is invalid
+     */
+    public void setInitialPosition(int x, int y) {
+        if (!board.isWithinBounds(x, y)) {
+            throw new IllegalArgumentException("Position is outside board boundaries");
+        }
+
+        // Reset the board and move history
+        board.reset();
+        moveHistory.clear();
+
+        // Set the new initial position
+        currentX = x;
+        currentY = y;
+        moveCount = 1;
+
+        // Mark the starting position
+        board.setSquareValue(currentY, currentX, moveCount);
+        moveHistory.add(new int[]{currentX, currentY});
+    }
+
     // Getters
 
     /**

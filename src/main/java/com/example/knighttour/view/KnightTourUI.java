@@ -9,23 +9,39 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
+import java.util.Optional;
 
 /**
  * Main UI component for the Knight's Tour application.
  * This class manages the layout and UI components.
  */
 public class KnightTourUI {
-    private static final int BOARD_SIZE = 8;
-
-    private final BorderPane root;
-    private final KnightTourController controller;
-    private final BoardView boardView;
+    private BorderPane root;
+    private KnightTourController controller;
+    private BoardView boardView;
+    private int boardSize;
 
     /**
      * Creates a new Knight's Tour UI.
      */
     public KnightTourUI() {
+        initializeUI();
+    }
+
+    /**
+     * Initializes the UI components and shows the board size dialog.
+     */
+    private void initializeUI() {
         root = new BorderPane();
+
+        // Show board size dialog
+        Optional<Integer> boardSizeResult = BoardSizeDialog.showDialog();
+        if (boardSizeResult.isEmpty()) {
+            // If user cancels, use default size of 8
+            boardSize = 8;
+        } else {
+            boardSize = boardSizeResult.get();
+        }
 
         // Create UI components
         Label statusLabel = new Label();
@@ -37,7 +53,7 @@ public class KnightTourUI {
 
         // Create the controller (which also initializes the model)
         controller = new KnightTourController(
-                BOARD_SIZE,
+                boardSize,
                 statusLabel,
                 moveHistoryArea,
                 this::updateBoardView  // Pass reference to method that updates the board view
