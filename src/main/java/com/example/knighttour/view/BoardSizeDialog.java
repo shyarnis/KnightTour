@@ -25,7 +25,6 @@ public class BoardSizeDialog {
 
         ButtonType confirmButtonType = new ButtonType("Confirm", ButtonBar.ButtonData.OK_DONE);
         dialog.getDialogPane().getButtonTypes().addAll(confirmButtonType, ButtonType.CANCEL);
-        // TODO: if pressed cancel exit the whole application, not going to next state
 
         GridPane grid = new GridPane();
         grid.setHgap(10);
@@ -41,6 +40,10 @@ public class BoardSizeDialog {
 
         dialog.getDialogPane().setContent(grid);
 
+        // Set up event handler for the CANCEL button
+        Button cancelButton = (Button) dialog.getDialogPane().lookupButton(ButtonType.CANCEL);
+        cancelButton.setOnAction(event -> System.exit(1));
+
         dialog.setResultConverter(dialogButton -> {
             if (dialogButton == confirmButtonType) {
                 return sizeSpinner.getValue();
@@ -50,4 +53,4 @@ public class BoardSizeDialog {
 
         return dialog.showAndWait();
     }
-} 
+}

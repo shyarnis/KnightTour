@@ -27,7 +27,6 @@ public class InitialPositionDialog extends Parent {
         // Set the button types
         ButtonType confirmButtonType = new ButtonType("Confirm", ButtonBar.ButtonData.OK_DONE);
         dialog.getDialogPane().getButtonTypes().addAll(confirmButtonType, ButtonType.CANCEL);
-        // TODO: if pressed cancel exit the whole application, not going to next state.
 
         // Create the row and column labels and spinners
         GridPane grid = new GridPane();
@@ -51,6 +50,10 @@ public class InitialPositionDialog extends Parent {
         grid.add(colSpinner, 1, 1);
 
         dialog.getDialogPane().setContent(grid);
+
+        // Set up event handler for the CANCEL button
+        Button cancelButton = (Button) dialog.getDialogPane().lookupButton(ButtonType.CANCEL);
+        cancelButton.setOnAction(event -> System.exit(1));
 
         // Convert the result to a row-column pair when the confirm button is clicked
         dialog.setResultConverter(dialogButton -> {
